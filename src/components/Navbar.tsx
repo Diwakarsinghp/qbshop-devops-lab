@@ -18,7 +18,7 @@ import { ToggleTheme } from "./ToggleTheme";
 import { Button } from "./ui/button";
 
 const links = [
-  { title: "Shops", url: "/shops" },
+  { title: "Diwakar", url: "/shops" },
   { title: "Contact", url: "/contact" },
   { title: "Offers", url: "/offers" },
   {
