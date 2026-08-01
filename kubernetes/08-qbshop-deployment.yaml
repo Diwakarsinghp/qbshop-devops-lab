@@ -15,8 +15,8 @@ spec:
     spec:
       containers:
         - name: qbs-app
-          image: qbshop-app:v1
-          imagePullPolicy: Never
+          image: diwakardockeracc/qbshop-app:v1
+          imagePullPolicy: Always
           ports:
             - containerPort: 3000
           envFrom:
