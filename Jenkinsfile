@@ -5,8 +5,8 @@ pipeline {
     
     environment {
         // Updated image names for QBShop project (DEV)
-        DOCKER_IMAGE_NAME = 'satyamsri/qbshop-app'
-        DOCKER_MIGRATION_IMAGE_NAME = 'satyamsri/qbshop-migration'
+        DOCKER_IMAGE_NAME = 'diwakardockeracc/qbshop-app'
+        DOCKER_MIGRATION_IMAGE_NAME = 'diwakardockeracc/qbshop-migration'
         DOCKER_IMAGE_TAG = "${BUILD_NUMBER}"
         GITHUB_CREDENTIALS = credentials('github-credentials')
         GIT_BRANCH = "dev"
@@ -21,7 +21,7 @@ pipeline {
                 }
             }
         }
-
+  
         stage('Clone Repository') {
             steps {
                 script {
@@ -139,6 +139,21 @@ pipeline {
                         gitUserName: 'Jenkins CI',
                         gitUserEmail: 'jenkins@ci.local'
                     )
+                }
+            }
+        }
+
+        stage('Deploy to Kubernetes') {
+            steps {
+                script {
+                    sh """
+                    kubectl set image deployment/qbshop \
+                    qbs-app=${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG} \
+                    -n qbshop
+
+                    kubectl rollout status deployment/qbshop \
+                    -n qbshop
+                    """
                 }
             }
         }
